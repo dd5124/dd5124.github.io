@@ -1,0 +1,23 @@
+---
+title: "About"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/yeji-sohn-84467a197/
+    - icon: github
+      text: Github
+      href: https://github.com/dd5124
+    - icon: window-desktop
+      text: Portfolio
+      href: https://dd5124.github.io/blog/
+
+---
+
+👋 Hi there! I'm Yeji, a passionate data scientist with a knack for machine learning and predictive modeling. 
+My repositories showcase a variety of projects, from web scraping and causal inference to Dockerfile and Github Actions practicies. 
+I love exploring new technologies and applying them to solve real-world problems.
+
+Thanks for stopping by! 😊

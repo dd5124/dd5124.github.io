@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Yeji Sohn">
+<meta name="dcterms.date" content="2025-01-18">
+
+<title>Market Segmentation with Regression Trees in Python: A Step-by-Step Guide – Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dd5124"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Market Segmentation with Regression Trees in Python: A Step-by-Step Guide</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">code</div>
+                <div class="quarto-category">analysis</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Yeji Sohn </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 18, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>In the world of data science, one of the most powerful tools for understanding customer behavior and improving marketing strategies is market segmentation. By dividing a market into subgroups with shared characteristics, companies can optimize pricing, enhance customer satisfaction, and allocate resources effectively. In this post, we explore how to use regression trees in Python for market segmentation, providing a step-by-step guide for practical application.</p>
+<section id="what-is-market-segmentation" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-market-segmentation">What is Market Segmentation?</h3>
+<p><img src="image.png" class="img-fluid"></p>
+<p>Market/Customer segmentation a important tool for identifying “who” your target audience is, serving as a key component of your business model. It divides a market into distinct customer groups with similar needs, interests, and priorities, allowing businesses to tailor marketing efforts and products. This process enhances resource allocation and customer satisfaction. For example, a retailer might segment by geography, income, or behavior.</p>
+<p>For this exercise, we’ll use user behavior and characteristics (avgerage hours, days visisted, income, etc..) to predict demand elasticities with a regression tree model.</p>
+<p>Customer segmentation in a business model offers several advantages:</p>
+<section id="effective-marketing-strategy" class="level4">
+<h4 class="anchored" data-anchor-id="effective-marketing-strategy">1. Effective Marketing Strategy</h4>
+<p>Segmentation deepens understanding of customers, allowing businesses to prioritize marketing channels and target specific customer groups with tailored messages and creatives.</p>
+</section>
+<section id="predicting-customer-behavior" class="level4">
+<h4 class="anchored" data-anchor-id="predicting-customer-behavior">2. Predicting Customer Behavior</h4>
+<p>By classifying customers based on behavior, segmentation helps predict future actions, enabling more proactive strategies.</p>
+</section>
+<section id="personalized-customer-experience" class="level4">
+<h4 class="anchored" data-anchor-id="personalized-customer-experience">3. Personalized Customer Experience</h4>
+<p>Segmentation allows businesses to offer services tailored to individual customer needs based on their data and create targeted programs, content, and incentives to reward customers and maintain their satisfaction and engagement.</p>
+</section>
+<section id="improved-conversion-metrics" class="level4">
+<h4 class="anchored" data-anchor-id="improved-conversion-metrics">4. Improved Conversion Metrics</h4>
+<p>Segmentation boosts conversion rates by enabling personalized strategies. It also helps identify abandoned carts and encourages checkout or purchase.</p>
+<p><span class="citation" data-cites="Takyar_2024">(<a href="#ref-Takyar_2024" role="doc-biblioref">Takyar 2024</a>)</span></p>
+</section>
+</section>
+<section id="key-concepts-to-understand" class="level3">
+<h3 class="anchored" data-anchor-id="key-concepts-to-understand">Key Concepts to Understand</h3>
+<section id="regression-trees" class="level4">
+<h4 class="anchored" data-anchor-id="regression-trees">1. Regression Trees</h4>
+<p>A machine learning tool that predicts continuous outcomes by splitting data based on input features.</p>
+</section>
+<section id="cp-value" class="level4">
+<h4 class="anchored" data-anchor-id="cp-value">2. CP Value</h4>
+<p>Complexity Parameter decides how deep the decision tree will be grown into. If any split does not increase the overall R2 of the model by at least cp, the tree does not split said branch any further</p>
+</section>
+</section>
+<section id="sample-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="sample-dataset">Sample Dataset</h3>
+<p>The dataset is from <span class="citation" data-cites="econml">(<a href="#ref-econml" role="doc-biblioref">Keith Battocchi 2019</a>)</span> developed by, <a href="https://www.microsoft.com/en-us/research/group/alice/">Alice Project</a>.</p>
+<p>There are around 10,000 observations and 9 continuous and categorical variables representing user’s behaviors and characteristics.</p>
+<p>Description of varaibales are as following:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature Name</th>
+<th style="text-align: left;">Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>account_age</strong></td>
+<td style="text-align: left;">user’s account age</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>age</strong></td>
+<td style="text-align: left;">user’s age</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>avg_hours</strong></td>
+<td style="text-align: left;">the average hours user was online per week in the past</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>days_visited</strong></td>
+<td style="text-align: left;">the average number of days user visited the website per week</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>friend_count</strong></td>
+<td style="text-align: left;">number of friends of user’s account</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>has_membership</strong></td>
+<td style="text-align: left;">whether the user had membership</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>is_US</strong></td>
+<td style="text-align: left;">whether the user accesses the website from the United States</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>songs_purchased</strong></td>
+<td style="text-align: left;">the average songs user purchased per week (non-discount season)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>income</strong></td>
+<td style="text-align: left;">user’s income</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>price</strong></td>
+<td style="text-align: left;">the price user was exposed to during the discount season (baseline price * small discount)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>demand</strong></td>
+<td style="text-align: left;">songs user purchased during the discount season</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="step-by-step-guide" class="level3">
+<h3 class="anchored" data-anchor-id="step-by-step-guide">Step-by-Step Guide</h3>
+<section id="step-1-loading-and-preparing-the-data" class="level4">
+<h4 class="anchored" data-anchor-id="step-1-loading-and-preparing-the-data">Step 1: Loading and Preparing the Data</h4>
+<p>First, we load the libraries and data, and perform some basic data cleaning.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeRegressor</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> plot_tree</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> tree</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>og_df <span class="op">=</span> pd.read_csv(<span class="st">"https://msalicedatapublic.z5.web.core.windows.net/datasets/Pricing/pricing_sample.csv"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>og_df.columns <span class="op">=</span> og_df.columns.<span class="bu">str</span>.replace(<span class="st">' '</span>, <span class="st">'_'</span>).<span class="bu">str</span>.lower()  <span class="co"># Clean column names</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-2-choose-number-of-segments" class="level4">
+<h4 class="anchored" data-anchor-id="step-2-choose-number-of-segments">Step 2: Choose number of segments</h4>
+<p>In this step, we use a regression tree to identify how many segments (or clusters) we want. The tree’s complexity is controlled by a hyperparameter (<code>ccp_alpha</code>), which we adjust to visualize the tree structure at different levels of complexity.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_tree(cp_val, data):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    reg_tree <span class="op">=</span> DecisionTreeRegressor(ccp_alpha<span class="op">=</span>cp_val)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    reg_tree.fit(data.drop(columns<span class="op">=</span><span class="st">'demand'</span>), data[<span class="st">'demand'</span>])</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">10</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    tree.plot_tree(reg_tree, filled<span class="op">=</span><span class="va">True</span>, feature_names<span class="op">=</span>data.drop(columns<span class="op">=</span><span class="st">'demand'</span>).columns)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>pricing_df <span class="op">=</span> og_df.copy()</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># exclude variable of intersts for segmentation</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>reg_tree_data <span class="op">=</span> pricing_df.drop(columns<span class="op">=</span>[<span class="st">'price'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>show_tree(<span class="dv">5</span>, reg_tree_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="../../results/img/tree_cp5.png" class="img-fluid"></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>show_tree(<span class="dv">1</span>, reg_tree_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="../../results/img/tree_cp1.png" class="img-fluid"></p>
+<p>We want 4 segments, so we will proceed with cp value of 1.</p>
+</section>
+<section id="step-3-building-the-regression-tree" class="level4">
+<h4 class="anchored" data-anchor-id="step-3-building-the-regression-tree">Step 3: Building the Regression Tree</h4>
+<p>In this step, we build the actual regression tree model, training it on the user characteristics to predict the demand.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cp_val <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>reg_tree <span class="op">=</span> DecisionTreeRegressor(ccp_alpha<span class="op">=</span>cp_val)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>reg_tree.fit(reg_tree_data.drop(columns<span class="op">=</span><span class="st">'demand'</span>), reg_tree_data[<span class="st">'demand'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>By fitting the model, we are able to identify the relationships between the various user characteristics and demand, and the tree automatically creates splits (segments) based on these variables.</p>
+</section>
+<section id="step-4-assigning-users-to-leaves" class="level4">
+<h4 class="anchored" data-anchor-id="step-4-assigning-users-to-leaves">Step 4: Assigning Users to Leaves</h4>
+<p>Next, we assign each user to a regression tree leaf:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pricing_df[<span class="st">'leaf'</span>] <span class="op">=</span> reg_tree.<span class="bu">apply</span>(reg_tree_data.drop(columns<span class="op">=</span><span class="st">'demand'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This step adds a new variable <code>leaf</code> to the dataset, which indicates the leaf (or segment) that each user belongs to.</p>
+</section>
+<section id="step-5-interpreting-the-results" class="level4">
+<h4 class="anchored" data-anchor-id="step-5-interpreting-the-results">Step 5: Interpreting the Results</h4>
+<p>At this point, we have successfully segmented the users based on their characteristics. Each user is now assigned to a segment (leaf) that represents a group of users with similar characteristics.</p>
+<p>To calculate price elasticities for each segment, do the following:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pricing_df[<span class="st">'log_price'</span>] <span class="op">=</span> np.log(pricing_df[<span class="st">'price'</span>])</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pricing_df[<span class="st">'log_q'</span>] <span class="op">=</span> np.log(pricing_df[<span class="st">'demand'</span>])</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Elasticity function</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> own_price_reg(leaf_num):</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    df  <span class="op">=</span> pricing_df[pricing_df[<span class="st">'leaf'</span>] <span class="op">==</span> leaf_num]</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> smf.ols(<span class="st">'log_q ~ log_price'</span>, data<span class="op">=</span>df).fit()</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model.params[<span class="st">'log_price'</span>]</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> leaf <span class="kw">in</span> pricing_df[<span class="st">'leaf'</span>].unique():</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    own_price <span class="op">=</span> own_price_reg(leaf)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    leaf_data <span class="op">=</span> pricing_df[pricing_df[<span class="st">'leaf'</span>] <span class="op">==</span> leaf]</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    avg_values <span class="op">=</span> leaf_data.drop(columns<span class="op">=</span>[<span class="st">'leaf'</span>]).mean().to_dict()</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add the result to the data list</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    avg_values[<span class="st">'leaf'</span>] <span class="op">=</span> leaf</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    avg_values[<span class="st">'own_price_reg'</span>] <span class="op">=</span> own_price</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    data.append(avg_values)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Both price and demand are transformed by log. This allows the coefficients to represent elasticity (the percentage change in demand for a percentage change in price).</p>
+<div class="cell" data-execution_count="1">
+<div id="tbl-results" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Average features and elasticity by segmentation
+</figcaption>
+<div aria-describedby="tbl-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="1">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 9%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 4%">
+<col style="width: 3%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">index</th>
+<th style="text-align: right;">account_age</th>
+<th style="text-align: right;">age</th>
+<th style="text-align: right;">avg_hours</th>
+<th style="text-align: right;">days_visited</th>
+<th style="text-align: right;">friends_count</th>
+<th style="text-align: right;">has_membership</th>
+<th style="text-align: right;">is_us</th>
+<th style="text-align: right;">songs_purchased</th>
+<th style="text-align: right;">income</th>
+<th style="text-align: right;">price</th>
+<th style="text-align: right;">demand</th>
+<th style="text-align: right;">log_price</th>
+<th style="text-align: right;">log_q</th>
+<th style="text-align: right;">leaf</th>
+<th style="text-align: right;">own_price_reg</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3.01726</td>
+<td style="text-align: right;">38.9238</td>
+<td style="text-align: right;">5.07327</td>
+<td style="text-align: right;">1.94948</td>
+<td style="text-align: right;">10.0314</td>
+<td style="text-align: right;">0.49294</td>
+<td style="text-align: right;">0.800439</td>
+<td style="text-align: right;">5.10132</td>
+<td style="text-align: right;">0.697376</td>
+<td style="text-align: right;">0.867587</td>
+<td style="text-align: right;">7.78766</td>
+<td style="text-align: right;">-0.145771</td>
+<td style="text-align: right;">2.02731</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-2.14204</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.97933</td>
+<td style="text-align: right;">39.4955</td>
+<td style="text-align: right;">5.05556</td>
+<td style="text-align: right;">5.99788</td>
+<td style="text-align: right;">9.97509</td>
+<td style="text-align: right;">0.514043</td>
+<td style="text-align: right;">0.786963</td>
+<td style="text-align: right;">4.98314</td>
+<td style="text-align: right;">0.702922</td>
+<td style="text-align: right;">0.869104</td>
+<td style="text-align: right;">12.753</td>
+<td style="text-align: right;">-0.144278</td>
+<td style="text-align: right;">2.53648</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-1.27903</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2.99316</td>
+<td style="text-align: right;">38.5003</td>
+<td style="text-align: right;">4.97012</td>
+<td style="text-align: right;">6.00526</td>
+<td style="text-align: right;">10.07</td>
+<td style="text-align: right;">0.50868</td>
+<td style="text-align: right;">0.793793</td>
+<td style="text-align: right;">5.14311</td>
+<td style="text-align: right;">1.5587</td>
+<td style="text-align: right;">0.958127</td>
+<td style="text-align: right;">24.6107</td>
+<td style="text-align: right;">-0.0454373</td>
+<td style="text-align: right;">3.20234</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">-0.112743</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.01388</td>
+<td style="text-align: right;">38.797</td>
+<td style="text-align: right;">4.93473</td>
+<td style="text-align: right;">2.01388</td>
+<td style="text-align: right;">10.0212</td>
+<td style="text-align: right;">0.488926</td>
+<td style="text-align: right;">0.807273</td>
+<td style="text-align: right;">4.9841</td>
+<td style="text-align: right;">1.57671</td>
+<td style="text-align: right;">0.958446</td>
+<td style="text-align: right;">19.592</td>
+<td style="text-align: right;">-0.0450707</td>
+<td style="text-align: right;">2.9738</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">-0.1203</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><strong>Group 2:</strong></p>
+<ul>
+<li><strong>Price Elasticity (-2.14):</strong> Highly elastic. The demand is sensitive to price changes. A small price increase could significantly reduce demand.</li>
+<li><strong>Average Income (0.70):</strong> Relatively low compared to other groups, suggesting higher price sensitivity (income effect).</li>
+<li><strong>Average Days Visited (1.95):</strong> Low platform engagement, possibly contributing to higher elasticity as these users might not be habitual buyers.</li>
+<li><strong>Interpretation:</strong> Price adjustments could significantly impact demand in this group, making them ideal for sale offerings.</li>
+</ul>
+<p><strong>Group 3:</strong></p>
+<ul>
+<li><strong>Price Elasticity (-1.28):</strong> Moderately elastic. Users are still responsive to price changes, but less so than Group 0.</li>
+<li><strong>Average Income (0.70):</strong> Similar to Group 2. Moderate price sensitivity.</li>
+<li><strong>Average Days Visited (5.99):</strong> Higher engagement than Group 0, which could reduce elasticity as these users are more invested in the platform.</li>
+<li><strong>Interpretation:</strong> This group may respond to price changes, but their higher engagement suggests potential for retention despite price increases.</li>
+</ul>
+<p><strong>Group 6:</strong></p>
+<ul>
+<li><strong>Price Elasticity (-0.11):</strong> Nearly inelastic. The demand is relatively insensitive to price changes.</li>
+<li><strong>Income (1.56):</strong> Higher than the other groups, likely contributing to lower price sensitivity.</li>
+<li><strong>Average Days Visited (6.01):</strong> Highest engagement. This could reduce elasticity as these users are more invested in the platform. highly.</li>
+<li><strong>Interpretation:</strong> This group can tolerate higher prices without significant reductions in demand, making them ideal for premium offerings.</li>
+</ul>
+<p><strong>Group 5:</strong></p>
+<ul>
+<li><strong>Price Elasticity (-0.12):</strong> Nearly inelastic. Similar to Group 6.</li>
+<li><strong>Income (1.58):</strong> Comparable to Group 6, supporting lower price sensitivity.</li>
+<li><strong>Average Days Visited (2.01):</strong> Despite low platform engagement, demand (19.59) remains high, which could mean that users in this group value the product highly.</li>
+<li><strong>Interpretation:</strong> Like Group 6, this group is less price-sensitive and may represent another target for premium pricing or tailored offers.</li>
+</ul>
+<p><strong>Recommendation:</strong></p>
+<ol type="1">
+<li><p>High Elasticity Groups (2 and 3):</p>
+<ul>
+<li>These groups are more price-sensitive due to lower income, engagement, or both.</li>
+<li>Price reductions or promotions may drive significant demand increases.</li>
+</ul></li>
+<li><p>Low Elasticity Groups (6 and 5):</p>
+<ul>
+<li>These groups show low sensitivity to price changes, likely due to higher income and inherent demand.</li>
+<li>They are suitable candidates for price increases or premium-tier products.</li>
+</ul></li>
+</ol>
+<p><img src="elasticity.PNG" class="img-fluid"></p>
+<p>By understanding these nuances, pricing and marketing strategies can be tailored to maximize revenue while maintaining user satisfaction.</p>
+</section>
+</section>
+<section id="real-world-applications" class="level3">
+<h3 class="anchored" data-anchor-id="real-world-applications">Real-World Applications</h3>
+<p>Market segmentation using regression trees can be applied to a variety of industries. Here are a few examples:</p>
+<ul>
+<li><p><strong>Retail</strong>: Optimize promotions and product offerings based on customer demographics.</p></li>
+<li><p><strong>Healthcare</strong>: Segment patients to tailor treatment plans.</p></li>
+<li><p><strong>Finance</strong>: Offer personalized financial products based on income and behavior.</p></li>
+</ul>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
+<p>In this blog post, we demonstrated how to segment a market using regression trees in Python. By using regression trees for segmentation, you can uncover actionable insights to drive strategy and decision-making. Whether refining pricing strategies or identifying customer needs, these tools offer a robust way to make the most of your data.</p>
+<p>If you’re interested in diving deeper into regression trees or market segmentation, try applying these techniques to your own datasets and explore how different groups behave differently in your industry.</p>
+<hr>
+</section>
+<section id="references" class="level1">
+
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-econml" class="csl-entry" role="listitem">
+Keith Battocchi, Maggie Hei, Eleanor Dillon. 2019. <span>“<span>EconML</span>: <span class="nocase">A Python Package for ML-Based Heterogeneous Treatment Effects Estimation</span>.”</span> https://github.com/py-why/EconML.
+</div>
+<div id="ref-Takyar_2024" class="csl-entry" role="listitem">
+Takyar, Akash. 2024. <span>“How to Build a Machine Learning Model for Customer Segmentation?”</span> <em>LeewayHertz</em>. <a href="https://www.leewayhertz.com/build-a-machine-learning-model-for-customer-segmentation/#How-to-build-a-machine-learning-model-for-customer-segmentation">https://www.leewayhertz.com/build-a-machine-learning-model-for-customer-segmentation/#How-to-build-a-machine-learning-model-for-customer-segmentation</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
