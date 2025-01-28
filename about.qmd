@@ -36,7 +36,7 @@ I love exploring new technologies and applying them to solve real-world problems
 
 Language: SQL, Python, R
 
-Database: PostgreSQL, MySQL
+Database: PostgreSQL, MySQL, MongoDB
 
 Visualization: Power BI, Tableau, Shiny
 
