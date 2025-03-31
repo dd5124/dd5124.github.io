@@ -1,12 +1,19 @@
 ---
-title: "Yeji Sohn"
-listing:
-  contents: posts
-  sort: "date desc"
-  type: default
-  categories: true
-  sort-ui: false
-  filter-ui: false
+title: "About"
+image: profile.jpg
 page-layout: full
-title-block-banner: true
+about:
+  template: jolla
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/yeji-sohn-84467a197/
+    - icon: github
+      text: Github
+      href: https://github.com/dd5124
+
 ---
+
+👋 Hi there! I'm Yeji, a passionate data scientist with expertise in data analysis and reporting, query optimization, database design, and data modelling.
+My repositories showcase a variety of projects, from web scraping and causal inference to Dockerfile and Github Actions practicies. 
+I love exploring new technologies and applying them to solve real-world problems.

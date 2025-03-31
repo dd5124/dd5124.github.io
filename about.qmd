@@ -1,53 +1,80 @@
 ---
-title: "About"
-image: profile.jpg
-about:
-  template: jolla
-  links:
-    - icon: linkedin
-      text: LinkedIn
-      href: https://www.linkedin.com/in/yeji-sohn-84467a197/
-    - icon: github
-      text: Github
-      href: https://github.com/dd5124
-    - icon: window-desktop
-      text: Portfolio
-      href: https://dd5124.github.io/blog/
+format: 
+  html:
+    page-layout: article
+css: |
+  body {
+    text-align: justify;
+  }
+---
+
+# Education
+
+## Master of Data Science - University of British Columbia (UBC)
+I am currently pursuing my Master's in Data Science at the University of British Columbia, driven by my passion for applying data-driven solutions to real-world challenges in e-commerce, finance, and public policy. My interest in these domains stems from my background in economics and informatics, where I developed a strong foundation in statistical modeling, data analytics, and computational problem-solving.
+
+At UBC, I have worked on various projects that involve advanced machine learning techniques, causal inference, and big data analysis. Through hands-on coursework and collaborations with peers, I have refined my skills in data engineering, statistical modeling, and software development. The program's interdisciplinary approach has further enhanced my ability to analyze complex systems and derive actionable insights from data.
+
+### Courses
+- Databases and Data Retrieval  
+- Feature and Model Selection  
+- Collaborative Software Development  
+- Regression II  
+- Supervised Learning II  
+- Data Visualization II  
+- Statistical Inference and Computation II  
+- Unsupervised Learning  
+- Spatial and Temporal Models  
+- Web and Cloud Computing  
+- Privacy, Ethics, and Security  
+- Experimentation and Causal Inference  
+- Advanced Machine Learning  
+
+### Capstone
+(TBD)
+
+## Honors Bachelor's Degree in Economics (Minor in Informatics) - University of Washington
+I earned my undergraduate degree in Economics with a minor in Informatics from the University of Washington. My academic journey was shaped by a strong analytical mindset and an interest in leveraging data to drive decision-making. Studying economics provided me with a deep understanding of market behavior, optimization, and policy analysis, while my coursework in informatics allowed me to develop technical expertise in computational methods, databases, and machine learning.
+
+This combination of quantitative and computational training has been instrumental in preparing me for a career in data science, equipping me with the ability to analyze data from both an economic and technical perspective. My undergraduate thesis focused on applying econometric techniques to real-world problems, reinforcing my ability to extract meaningful insights from data and translate them into actionable recommendations.
+
+### Academic Achievements
+- Dean's Honor Roll for four years  
+- Certificate in Quantitative Managerial Economics  
+
+### Courses
+#### Economics & Statistics
+- Econometric Theory and Practice (4.0)  
+- Causal Inference (3.9)  
+- Industrial Organization and Price Analysis (3.8)  
+- Computational Finance (3.9)  
+- Game Theory (3.7)  
+- Data Science for Pricing (3.9)  
+
+#### Computer Science & Mathematics
+- Advanced Multivariable Calculus I (3.9)  
+- Algorithms and Computational Complexity (4.0)  
+- Database & Data Modeling (4.0)  
 
 ---
 
-👋 Hi there! I'm Yeji, a passionate data scientist with expertise in data analysis and reporting, query optimization, database design, and data modelling.
-My repositories showcase a variety of projects, from web scraping and causal inference to Dockerfile and Github Actions practicies. 
-I love exploring new technologies and applying them to solve real-world problems.
+# Skills
 
-<br />
+### Programming & Tools
+- Python, R, SQL, NoSQL, Git, Bash, Docker, GitHub Workflows
 
-📚 Projects
+### Data Engineering
+- Databases, Data Pipelines, Cloud Computing, Web & Cloud Tools
 
-| **Project Link**                                                                                       | **Area**             | **Tools**                                   | **Project Description**                                                                                                                                                                                                                                                                                             |
-|-------------------------------------------------------------------------------------------------------|----------------------------------|--------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Sales Analyzer](https://github.com/UBC-MDS/salesanalyzer)                                           | CI/CD, Software packaging           | Python, GitHub Actions             | A Python package for retail sales analysis, offering functions to identify market segments, predict future sales, and analyze seasonal revenue trends. Targeted at small to medium-sized businesses without in-house analytics teams, the package simplifies common sales-related tasks.                             |
-| [Heart Disease Predictor](https://github.com/UBC-MDS/DSCI522-2425-25-heart_disease_predictor)        | Automated data science workflows                | Python, Docker, Makefile       | Models built using decision trees and logistic regression to predict heart disease based on health-related features. Achieved an accuracy of 84.4%. Includes feature analysis and plans to incorporate ensemble methods for enhanced performance.                                                                      |
-| [Price Elasticity Estimation Using Double ML](https://github.com/dd5124/price_elasticity_estimation) | Time-Series Analysis, Causal inference  | Python, Jupyter Notebook | Analyzes supermarket scanner data to estimate price elasticity of orange juice. Explores how past prices affect current sales, demonstrating a significant price inelasticity. Calculates optimal markup rates using both linear regression and double machine learning techniques.                                    |
+### Machine Learning
+- Supervised Learning (Logistic Regression, Decision Trees, SVM, XGBoost)
+- Unsupervised Learning (K-Means, PCA, Hierarchical Clustering)
+- Feature Engineering, Model Evaluation
 
-<br />
+### Statistics & Experimentation
+- Descriptive & Inferential Statistics, Probability, Hypothesis Testing
+- Regression Analysis, Causal Inference, Experimental Design
 
-🛠️ Tools
-
-Language: SQL, Python, R
-
-Database: PostgreSQL, MySQL, MongoDB
-
-Visualization: Power BI, Tableau, Shiny
-
-<br />
-
-👋🏻 Connect with Me
-
-[Linkedin](https://www.linkedin.com/in/yeji-sohn-84467a197/)
-
-<br />
-<br />
-<br />
-
-Thanks for stopping by! 😊
+### Visualization & Communication
+- Data Visualization (Matplotlib, Seaborn, ggplot2)
+- Dashboard (Dash, Shiny)

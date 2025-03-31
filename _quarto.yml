@@ -1,18 +1,24 @@
 project:
   type: website
-  output-dir: docs
 
 website:
-  title: "Blog"
+  title: "Yeji Sohn"
   navbar:
-    right:
-      - about.qmd
-      - icon: github
-        href: https://github.com/dd5124
+    left:
+      - href: index.qmd
+        text: Home
+      - text: "Projects"
+        href: projects.qmd
+      - text: "Resume"
+        href: about.qmd
+      - text: "Blog"
+        href: blog.qmd
+
 format:
   html:
     theme: cosmo
     css: styles.css
+    toc: true
 
 
 

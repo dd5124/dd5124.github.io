@@ -1,0 +1,23 @@
+📚 Projects
+
+| **Project Link**                                                                                       | **Area**             | **Tools**                                   | **Project Description**                                                                                                                                                                                                                                                                                             |
+|-------------------------------------------------------------------------------------------------------|----------------------------------|--------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Sales Analyzer](https://github.com/UBC-MDS/salesanalyzer)                                           | CI/CD, Software packaging           | Python, GitHub Actions             | A Python package for retail sales analysis, offering functions to identify market segments, predict future sales, and analyze seasonal revenue trends. Targeted at small to medium-sized businesses without in-house analytics teams, the package simplifies common sales-related tasks.                             |
+| [Heart Disease Predictor](https://github.com/UBC-MDS/DSCI522-2425-25-heart_disease_predictor)        | Automated data science workflows                | Python, Docker, Makefile       | Models built using decision trees and logistic regression to predict heart disease based on health-related features. Achieved an accuracy of 84.4%. Includes feature analysis and plans to incorporate ensemble methods for enhanced performance.                                                                      |
+| [Price Elasticity Estimation Using Double ML](https://github.com/dd5124/price_elasticity_estimation) | Time-Series Analysis, Causal inference  | Python, Jupyter Notebook | Analyzes supermarket scanner data to estimate price elasticity of orange juice. Explores how past prices affect current sales, demonstrating a significant price inelasticity. Calculates optimal markup rates using both linear regression and double machine learning techniques.                                    |
+
+<br />
+
+🛠️ Tools
+
+Language: SQL, Python, R
+
+Database: PostgreSQL, MySQL, MongoDB
+
+Visualization: Power BI, Tableau, Shiny
+
+<br />
+
+
+
+Thanks for stopping by! 😊
