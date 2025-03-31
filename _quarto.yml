@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "Yeji Sohn"
@@ -13,6 +14,9 @@ website:
         href: about.qmd
       - text: "Blog"
         href: blog.qmd
+    right:
+      - icon: github
+        href: https://github.com/dd5124
 
 format:
   html:

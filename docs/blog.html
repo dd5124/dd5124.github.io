@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>projects – Yeji Sohn</title>
+<title>Blog Entries – Yeji Sohn</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,6 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -66,7 +68,65 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-reading-time','listing-description','listing-categories','listing-image',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -93,7 +153,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./projects.html" aria-current="page"> 
+    <a class="nav-link" href="./projects.html"> 
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
@@ -101,8 +161,15 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Resume</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html"> 
+    <a class="nav-link active" href="./blog.html" aria-current="page"> 
 <span class="menu-text">Blog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dd5124"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -112,60 +179,136 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    </div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(2)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Blog Entries</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
 
 
 
 
-<p>📚 Projects</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th><strong>Project Link</strong></th>
-<th><strong>Area</strong></th>
-<th><strong>Tools</strong></th>
-<th><strong>Project Description</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="https://github.com/UBC-MDS/salesanalyzer">Sales Analyzer</a></td>
-<td>CI/CD, Software packaging</td>
-<td>Python, GitHub Actions</td>
-<td>A Python package for retail sales analysis, offering functions to identify market segments, predict future sales, and analyze seasonal revenue trends. Targeted at small to medium-sized businesses without in-house analytics teams, the package simplifies common sales-related tasks.</td>
-</tr>
-<tr class="even">
-<td><a href="https://github.com/UBC-MDS/DSCI522-2425-25-heart_disease_predictor">Heart Disease Predictor</a></td>
-<td>Automated data science workflows</td>
-<td>Python, Docker, Makefile</td>
-<td>Models built using decision trees and logistic regression to predict heart disease based on health-related features. Achieved an accuracy of 84.4%. Includes feature analysis and plans to incorporate ensemble methods for enhanced performance.</td>
-</tr>
-<tr class="odd">
-<td><a href="https://github.com/dd5124/price_elasticity_estimation">Price Elasticity Estimation Using Double ML</a></td>
-<td>Time-Series Analysis, Causal inference</td>
-<td>Python, Jupyter Notebook</td>
-<td>Analyzes supermarket scanner data to estimate price elasticity of orange juice. Explores how past prices affect current sales, demonstrating a significant price inelasticity. Calculates optimal markup rates using both linear regression and double machine learning techniques.</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<p>🛠️ Tools</p>
-<p>Language: SQL, Python, R</p>
-<p>Database: PostgreSQL, MySQL, MongoDB</p>
-<p>Visualization: Power BI, Tableau, Shiny</p>
-<p><br></p>
-<p>Thanks for stopping by! 😊</p>
 
 
-
-</main> <!-- /main -->
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+     </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
+</div>
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="code,analysis" data-listing-date-sort="1737187200000" data-listing-file-modified-sort="1737189452887" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1668">
+<div class="thumbnail">
+<p><a href="./posts/post1/index.html" class="no-external"></a></p><a href="./posts/post1/index.html" class="no-external">
+<p><img loading="lazy" src="./posts/post1/image.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/post1/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/post1/index.html" class="no-external">Market Segmentation with Regression Trees in Python: A Step-by-Step Guide</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/post1/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
+code
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
+analysis
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/post1/index.html" class="no-external">In the world of data science, one of the most powerful tools for understanding customer behavior and improving marketing strategies is market segmentation. By dividing a…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/post1/index.html" class="no-external">
+<div class="listing-date">
+Jan 18, 2025
+</div>
+<div class="listing-reading-time">
+9 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="analysis" data-listing-date-sort="1736928000000" data-listing-file-modified-sort="1737017755508" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1538">
+<div class="thumbnail">
+<p><a href="./posts/post2/index.html" class="no-external"></a></p><a href="./posts/post2/index.html" class="no-external">
+<p class="card-img-top"><img src="posts\post2\tree_flowchart.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/post2/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/post2/index.html" class="no-external">Comparing Classification Models in Health Context</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/post2/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
+analysis
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/post2/index.html" class="no-external">Recent developments in machine learning and artificial intelligence have introduced breakthrough methods for predicting diagnoses, health emergencies, and more. Despite some…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/post2/index.html" class="no-external">
+<div class="listing-date">
+Jan 15, 2025
+</div>
+<div class="listing-reading-time">
+8 min
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
